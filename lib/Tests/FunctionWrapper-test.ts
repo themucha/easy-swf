@@ -1,3 +1,6 @@
+/// <reference path="../../typings/tsd.d.ts" />
+
+import nodeunit = require("nodeunit");
 import acts = require("../Activity");
 import interfaces = require("../Interfaces");
 import wrapper = require("../FunctionWrapper");

@@ -1,5 +1,5 @@
 ﻿import AWS = require("aws-sdk");
-import uuid = require("uuid");
+import uuid = require("node-uuid");
 
 export function buildScheduleActivityTask(input: string, activityName: string, version: string, taskList: string): AWS.Swf.Decision {
 

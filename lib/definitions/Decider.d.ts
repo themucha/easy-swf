@@ -1,0 +1,50 @@
+import AWS = require("aws-sdk");
+import DataAccess = require("./SwfDataAccess");
+import e = require("./EventParser");
+import interfaces = require("./Interfaces");
+export declare class DecisionHost {
+    private swf;
+    private activityRegister;
+    taskList: string;
+    private domain;
+    private workflowDeciders;
+    private eventParser;
+    private feedbackHandler;
+    private workflowItemRegister;
+    private continuePolling;
+    private lastHeartbeat;
+    private heartId;
+    private whenStopped;
+    constructor(workflowItemRegister: interfaces.IWorkflowItemRegister, register: interfaces.IActivityRegister, domain: string, taskList: string, swf: DataAccess.ISwfDataAccess, eventParser: e.EventParser);
+    handleWorkflow(workflowType: string, version: string, decisionLogic: (context: DecisionContext) => void): void;
+    listen(feedbackHandler?: (err: Error, message: string, context: DecisionContext) => void): void;
+    private start();
+    private createHeartbeatWrapper(feedbackHandler);
+    stop(callback?: (err: Error) => void): void;
+    private BeginDecisionPolling();
+    private doDecisionPoll(me, domain, taskList);
+}
+export declare class DecisionContext implements interfaces.IDecisionContext {
+    state: AWS.Swf.DecisionTask;
+    private swf;
+    private taskToken;
+    private taskList;
+    activities: interfaces.IActivity[];
+    workflowInput: string;
+    workflowReference: string;
+    private decisions;
+    private submissionRegistered;
+    private feedbackHandler;
+    constructor(taskList: string, eventParser: e.EventParser, swf: DataAccess.ISwfDataAccess, feedbackHandler: (err: Error, message: string, context: DecisionContext) => void, state: AWS.Swf.DecisionTask);
+    lastActivity(): interfaces.IActivity;
+    failWorkflow(err: Error): void;
+    completeWorkflow(): void;
+    getPromise(name: string, version: string): any;
+    getFunction(name: string, version: string): any;
+    doActivity(activity: interfaces.IActivity, data?: string): void;
+    doNothing(): void;
+    private getFirstActivity(activityName, version);
+    private getActivityState(name, version);
+    private doActivityByName(activityName, version, taskList, data?);
+    private registerDecision(decision?);
+}

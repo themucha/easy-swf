@@ -1,3 +1,4 @@
+/// <reference path="../Scripts/typings/aws-sdk/aws-sdk.d.ts" />
 import AWS = require("aws-sdk");
 
 export var monitor = console;

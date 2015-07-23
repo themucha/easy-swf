@@ -12,7 +12,7 @@ export class ActivityHost {
   private feedbackHandler: (err: Error, message: string) => void;
   private continuePolling: boolean;
   private lastHeartbeat: number;
-  private heartId: NodeTimer;
+  private heartId: NodeJS.Timer;
   private whenStopped: (err: Error) => void;
 
   constructor(register: interfaces.IActivityRegister, domain: string, taskList: string, swf: dal.ISwfDataAccess) {

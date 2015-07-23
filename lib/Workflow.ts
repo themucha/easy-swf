@@ -6,7 +6,7 @@ import dal = require("./SwfDataAccess");
 import r = require("./ActivityRegister");
 import w = require("./WorkflowItemRegister");
 import interfaces = require("./Interfaces");
-import uuid = require("uuid");
+import uuid = require("node-uuid");
 import errors = require("./CustomErrors");
 
 export class WorkflowClient {

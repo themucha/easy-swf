@@ -1,7 +1,7 @@
 import AWS = require("aws-sdk");
 import DataAccess = require("./SwfDataAccess");
 import Decisions = require("./Decisions");
-import uuid = require("uuid");
+import uuid = require("node-uuid");
 import a = require("./Activity");
 import e = require("./EventParser");
 import interfaces = require("./Interfaces");
@@ -21,7 +21,7 @@ export class DecisionHost {
   private workflowItemRegister: interfaces.IWorkflowItemRegister;
   private continuePolling: boolean;
   private lastHeartbeat: number;
-  private heartId: NodeTimer;
+  private heartId: NodeJS.Timer;
   private whenStopped: (err: Error) => void;
 
   constructor(workflowItemRegister: interfaces.IWorkflowItemRegister, register: interfaces.IActivityRegister, domain: string, taskList: string, swf: DataAccess.ISwfDataAccess, eventParser: e.EventParser) {

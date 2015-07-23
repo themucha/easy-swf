@@ -1,3 +1,6 @@
+/// <reference path="../../typings/tsd.d.ts" />
+
+import nodeunit = require("nodeunit");
 import interfaces = require("../Interfaces");
 import errors = require("../CustomErrors");
 import parser = require("../EventParser");

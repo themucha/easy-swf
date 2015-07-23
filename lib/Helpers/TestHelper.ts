@@ -1,3 +1,4 @@
+import nodeunit = require("nodeunit");
 import errors = require("../CustomErrors");
 
 export function nullErrorTest(test: nodeunit.Test, fnc: () => void) {

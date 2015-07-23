@@ -1,3 +1,6 @@
+/// <reference path="../../typings/tsd.d.ts" />
+
+import nodeunit = require("nodeunit");
 import workflow = require("../Workflow");
 import interfaces = require("../Interfaces");
 import errors = require("../CustomErrors");
@@ -164,60 +167,6 @@ var testGroup = {
 
     test.done();
   },
-  "Null AWS config throws an error if process.env.AWS_ACCESS_KEY_ID is missing": function (test: nodeunit.Test): void {
-
-    var name = "workflowName";
-    var options =
-      {
-        "domain": "myDomain",
-        "taskList": "mainList",
-      };
-
-    var swf = gently.stub("Interfaces", "ISwfDataAccess");
-
-    process.env.AWS_SECRET_ACCESS_KEY = "abc";
-    process.env.AWS_REGION = "abc";
-
-    ConstructorTest(test, options, null, swf);
-
-    test.done();
-  },
-  "Null AWS config throws an error in process.env.AWS_SECRET_ACCESS_KEY is missing": function (test: nodeunit.Test): void {
-
-    var name = "workflowName";
-    var options =
-      {
-        "domain": "myDomain",
-        "taskList": "mainList",
-      };
-
-    var swf = gently.stub("Interfaces", "ISwfDataAccess");
-
-    process.env.AWS_ACCESS_KEY_ID = "abc";
-    process.env.AWS_REGION = "abc";
-
-    ConstructorTest(test, options, null, swf);
-
-    test.done();
-  },
-  "Null AWS config throws an error in process.env.AWS_REGION is missing": function (test: nodeunit.Test): void {
-
-    var name = "workflowName";
-    var options =
-      {
-        "domain": "myDomain",
-        "taskList": "mainList",
-      };
-
-    var swf = gently.stub("Interfaces", "ISwfDataAccess");
-
-    process.env.AWS_ACCESS_KEY_ID = "abc";
-    process.env.AWS_SECRET_ACCESS_KEY = "abc";
-
-    ConstructorTest(test, options, null, swf);
-
-    test.done();
-  },
   "Null AWS config doesn't throw an error in process.env is correctly set up": function (test: nodeunit.Test): void {
 
     var name = "workflowName";
@@ -280,28 +229,7 @@ var testGroup = {
     var client = new workflow.WorkflowClient(options, config, swf);
 
     test.done();
-  },
-  "AWS config throws an error if partial credentials are passed in and process.env variables are missing": function (test: nodeunit.Test): void {
-
-    var name = "workflowName";
-    var options =
-      {
-        "domain": "myDomain",
-        "taskList": "mainList",
-      };
-
-    var swf = gently.stub("Interfaces", "ISwfDataAccess");
-
-    var config = {
-      "accessKeyId": "access",
-      "region": "eu-west-1"
-    };
-
-    ConstructorTest(test, options, config, swf);
-
-    test.done();
   }
-
 
 };
 
