@@ -18,7 +18,6 @@ export class WorkflowClient {
   constructor(workflow: interfaces.IOptions, awsConfig?: any, swf?: dal.ISwfDataAccess) {
 
     this.validateOptions(workflow);
-    this.validateConfig(awsConfig);
 
     if (awsConfig != null) {
       AWS.config.update(awsConfig);
@@ -37,16 +36,6 @@ export class WorkflowClient {
     if (!workflow) throw new errors.NullOrEmptyArgumentError("workflow");
     if (!workflow.domain) throw new errors.InvalidArgumentError("domain is mandatory");
     if (!workflow.taskList) throw new errors.InvalidArgumentError("taskList is mandatory");
-  }
-
-  private validateConfig(awsConfig: any) {
-
-    if (awsConfig && awsConfig.accessKeyId && awsConfig.secretAccessKey && awsConfig.region) return;
-
-    if (!process.env.AWS_ACCESS_KEY_ID) throw new errors.InvalidArgumentError("accessKeyId not found in config or process.env.AWS_ACCESS_KEY_ID");
-    if (!process.env.AWS_SECRET_ACCESS_KEY) throw new errors.InvalidArgumentError("secretAccessKey not found in config or process.env.AWS_SECRET_ACCESS_KEY");
-    if (!process.env.AWS_REGION) throw new errors.InvalidArgumentError("region not found in config or process.env.AWS_REGION");
-
   }
 
   public createActivityHost(taskList: string): a.ActivityHost {
